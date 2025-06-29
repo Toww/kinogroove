@@ -47,4 +47,8 @@ group :development, :test do
 
   # Project gems
   gem "faker"
+  gem "dotenv"
+  gem "devise"
+  gem "devise-jwt"
+  gem "jsonapi-serializer"
 end
