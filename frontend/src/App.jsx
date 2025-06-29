@@ -1,13 +1,34 @@
-import PostsList from "./components/posts/PostsList";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Home from "./pages/Home";
+import Feed from "./pages/Feed";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Layout from "./components/Layout";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 function App() {
   return (
     <>
-      <div className="my-8 mx-auto max-w-2xl">
-        <h1 className="text-lg text-center mb-6">Index page</h1>
-
-        <PostsList />
-      </div>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route
+                path="/feed"
+                element={
+                  <ProtectedRoute>
+                    <Feed />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }
