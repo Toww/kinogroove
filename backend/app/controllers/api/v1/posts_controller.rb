@@ -7,12 +7,24 @@ class Api::V1::PostsController < ApplicationController
   def index
     @posts = Post.order(created_at: :desc)
 
-    render json: @posts
+    posts_with_songs = @posts.map do |post|
+      if post.song.attached?
+        post.as_json.merge(song_url: url_for(post.song))
+      else
+        post.as_json.merge(song_url: nil)
+      end
+    end
+
+    render json: posts_with_songs
   end
 
   # GET /posts/1
   def show
-    render json: @post
+    if @post.song.attached?
+      render json: @post.as_json.merge(song_url: url_for(@post.song))
+    else
+      render json: @post.as_json.merge(song_url: nil)
+    end
   end
 
   # POST /posts
@@ -20,7 +32,7 @@ class Api::V1::PostsController < ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      render json: @post, status: :created, location: @post
+      render json: @post, status: :created
     else
       render json: @post.errors, status: :unprocessable_entity
     end
@@ -48,6 +60,6 @@ class Api::V1::PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.expect(post: [ :title, :body ])
+      params.expect(post: [ :title, :body, :song ])
     end
 end

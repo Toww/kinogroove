@@ -1,9 +1,14 @@
+import PostForm from "../components/posts/PostForm";
 import PostsList from "../components/posts/PostsList";
+import { PostsProvider } from "../contexts/PostsContext";
 
 const Feed = () => {
   return (
     <>
-      <PostsList />
+      <PostsProvider>
+        <PostForm />
+        <PostsList />
+      </PostsProvider>
     </>
   );
 };

@@ -5,9 +5,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
-function App() {
+const App = () => {
   return (
     <>
       <AuthProvider>
@@ -31,6 +31,6 @@ function App() {
       </AuthProvider>
     </>
   );
-}
+};
 
 export default App;

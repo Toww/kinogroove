@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
+const AuthProvider = ({ children }) => {
   // States
   const [token, setToken] = useState(localStorage.getItem("token"));
 
@@ -23,8 +23,10 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuth() {
+const useAuth = () => {
   return useContext(AuthContext);
-}
+};
+
+export { AuthProvider, useAuth };
