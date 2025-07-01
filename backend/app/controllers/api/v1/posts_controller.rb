@@ -4,17 +4,14 @@ class Api::V1::PostsController < ApplicationController
 
   # GET /posts
   def index
+    posts_per_page = 10
     @posts = Post.order(created_at: :desc)
 
-    posts_with_songs = @posts.map do |post|
-      if post.song.attached?
-        post.as_json.merge(song_url: url_for(post.song))
-      else
-        post.as_json.merge(song_url: nil)
-      end
-    end
-
-    render json: posts_with_songs
+    render json: {
+      posts: paginate_posts(@posts, posts_per_page, false),
+      total_count: Post.count,
+      posts_per_page: posts_per_page
+    }
   end
 
   # GET /posts/1

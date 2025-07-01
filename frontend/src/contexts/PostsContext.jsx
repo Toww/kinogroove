@@ -10,33 +10,40 @@ const PostsProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [totalPosts, setTotalPosts] = useState(0);
+  const [postsPerPage, setPostsPerPage] = useState(10);
 
   // Hooks
   const { token } = useAuth();
 
   // Handlers
-  const fetchPosts = useCallback(() => {
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-
-    axios
-      .get(`${API_URL}/posts`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        setError(err.message);
-      })
-      .finally(() => {
+  const fetchPosts = useCallback(
+    (page = 1) => {
+      if (!token) {
         setLoading(false);
-      });
-  }, [token]);
+        return;
+      }
+
+      setLoading(true);
+
+      axios
+        .get(`${API_URL}/posts`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setPosts(res.data.posts);
+          setTotalPosts(res.data.total_count);
+          setPostsPerPage(res.data.posts_per_page);
+        })
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+    [token],
+  );
 
   const createPost = useCallback(
     (data) => {
@@ -70,6 +77,8 @@ const PostsProvider = ({ children }) => {
         posts,
         error,
         loading,
+        totalPosts,
+        postsPerPage,
         createPost,
       }}
     >

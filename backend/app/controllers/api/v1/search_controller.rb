@@ -10,18 +10,10 @@ class Api::V1::SearchController < ApplicationController
       "#{query}%",
       "##{query}%").order(created_at: :desc)
 
-    posts_with_songs_and_hashtags = @posts.map do |post|
-      if post.song.attached?
-        post
-        .as_json(methods: :hash_tags)
-        .merge(song_url: url_for(post.song))
-      else
-        post
-        .as_json(methods: :hash_tags)
-        .merge(song_url: nil)
-      end
+    augmented_posts = @posts.map do |post|
+      augment_post(post, true)
     end
 
-    render json: posts_with_songs_and_hashtags
+    render json: augmented_posts
   end
 end
