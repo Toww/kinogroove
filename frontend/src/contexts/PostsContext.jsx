@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router";
 import { createContext, useState, useEffect, useCallback } from "react";
 import axios from "../axiosInstance";
 import { API_URL } from "../constants";
@@ -6,6 +7,10 @@ import { useAuth } from "./AuthContext";
 const PostsContext = createContext();
 
 const PostsProvider = ({ children }) => {
+  // Hooks
+  const { token } = useAuth();
+  const [searchParams] = useSearchParams();
+
   //States
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
@@ -13,12 +18,9 @@ const PostsProvider = ({ children }) => {
   const [totalPosts, setTotalPosts] = useState(0);
   const [postsPerPage, setPostsPerPage] = useState(10);
 
-  // Hooks
-  const { token } = useAuth();
-
   // Handlers
   const fetchPosts = useCallback(
-    (page = 1) => {
+    (page) => {
       if (!token) {
         setLoading(false);
         return;
@@ -27,7 +29,7 @@ const PostsProvider = ({ children }) => {
       setLoading(true);
 
       axios
-        .get(`${API_URL}/posts`, {
+        .get(`${API_URL}/posts?page=${page || 1}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
@@ -68,7 +70,7 @@ const PostsProvider = ({ children }) => {
 
   // Effects
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(searchParams.get("page"));
   }, [fetchPosts]);
 
   return (
@@ -79,6 +81,7 @@ const PostsProvider = ({ children }) => {
         loading,
         totalPosts,
         postsPerPage,
+        fetchPosts,
         createPost,
       }}
     >

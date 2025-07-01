@@ -36,7 +36,7 @@ const PostsSearch = () => {
 
     return searchedPosts.map((post, index) => (
       <div
-        key={index}
+        key={`search-post-${index}`}
         className="mb-2 rounded border border-gray-200 p-4 text-left"
       >
         <h3>Title: {post.title}</h3>
