@@ -57,6 +57,10 @@ L'appli front est lancée et tout est prêt à être testé 🎉!
 
 Il vous suffit alors de vous rendre sur [http://127.0.0.1:5173/](http://127.0.0.1:5173/) et de vous créer un compte.
 
+## Les wireframes et maquettes
+
+Les wireframes et maquettes Figma sont disponibles en suivant [ce lien](https://www.figma.com/design/qKLzw6WitJmAwmUypOohHO/Kinogroove?node-id=0-1&t=zJJbY5y9Wx3CLjTg-1).
+
 ## Pistes d'améliorations
 
 Ce projet étant un POC mis en place dans un temps court, voici quelques pistes d'améliorations que j'envisagerais si je continue à travailler dessus :
