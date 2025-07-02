@@ -1,42 +1,60 @@
 import { useContext } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useForm } from "react-hook-form";
+import FormInput from "../ui/FormInput";
 import { PostsContext } from "../../contexts/PostsContext";
-
 const PostForm = () => {
   // Contexts
   const { createPost, error } = useContext(PostsContext);
 
+  // Hooks
+  const { register, handleSubmit, formState } = useForm();
+
   // Handlers
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (entries) => {
     const data = new FormData();
 
-    data.append("post[body]", e.target.body.value);
+    data.append("post[body]", entries.body);
 
-    if (e.target.song.files[0]) {
-      data.append("post[song]", e.target.song.files[0]);
+    if (entries.song[0]) {
+      data.append("post[song]", entries.song[0]);
     }
     createPost(data);
   };
 
   return (
     <div className="mb-8 bg-gray-100 p-4">
-      <form onSubmit={handleSubmit}>
-        <div className="mt-2">
-          <label htmlFor="body">Text</label>
-          <input className="ml-2 bg-white" type="text" name="body" id="body" />
-        </div>
-        <div className="mt-2">
-          <label htmlFor="body">Song</label>
-          <input className="ml-2 bg-white" type="file" name="song" id="song" />
-        </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormInput
+          id="body"
+          type="text"
+          labelText="Body"
+          containerClasses="mt-2"
+          formState={formState}
+          {...register("body", {
+            required: "Your post must have a message.",
+            maxLength: {
+              value: 100,
+              message: "Your post should have max. 100 characters.",
+            },
+          })}
+        />
+        <FormInput
+          id="song"
+          type="file"
+          labelText="Song"
+          accept="audio/*, .mp3"
+          containerClasses="mt-2"
+          formState={formState}
+          {...register("song", {
+            required: "Your post must have a song.",
+          })}
+        />
 
-        <button
+        <input
           type="submit"
           className="mt-4 cursor-pointer rounded bg-teal-400 px-2 py-2"
-        >
-          Create post
-        </button>
+          value="Create post"
+        ></input>
       </form>
       {error && <p>{error.message}</p>}
     </div>
