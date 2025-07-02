@@ -23,8 +23,8 @@ end
 puts "Seeding posts..."
 100.times do
   Post.create(
-    body: Faker::Lorem.sentence(word_count: 10) + " #" +
-    Faker::Music.genre.split.join("-") + Faker::Lorem.sentence(word_count: 5) + " #" + Faker::Music.genre.split.join("-"),
+    body: Faker::Lorem.sentence(word_count: 3) + " #" +
+    Faker::Music.genre.split.join("-") + " " + Faker::Lorem.sentence(word_count: 2) + " #" + Faker::Music.genre.split.join("-"),
     user_id: User.all.sample.id
   )
 end
@@ -36,7 +36,7 @@ Post.all.each do |post|
   end
 end
 
-puts "Giving posts some love..."
+puts "Giving posts some likes..."
 users = User.all.to_a
 Post.all.each do |post|
   users.sample(rand(0..10)).each do |user|

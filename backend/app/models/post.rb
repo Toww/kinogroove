@@ -10,17 +10,9 @@ class Post < ApplicationRecord
 
   # Validations
   validates :body, presence: true, length: { maximum: 100 }
-  validate :correct_file_type
 
   # Callbacks
   after_commit :create_hash_tags, on: :create
-
-  # Songs
-  def correct_file_type
-    if song.attached? === false || !song.content_type.in?([ "audio/mpeg", "audio/mp3" ])
-      errors.add("Your post must have a valid song attached.")
-    end
-  end
 
   # Likes
   def liked?(user)
