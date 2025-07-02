@@ -1,4 +1,5 @@
 import { Outlet, useNavigate } from "react-router";
+import Button from "./ui/Button";
 import { useAuth } from "../contexts/AuthContext";
 
 const Layout = () => {
@@ -7,16 +8,11 @@ const Layout = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="my-8 mx-auto max-w-2xl">
+    <div className="mx-auto my-8 max-w-2xl">
       {isLogged && (
-        <nav className="flex justify-between border-b pb-2 mb-8 text-right w-full">
+        <nav className="mb-8 flex w-full justify-between border-b pb-2 text-right">
           <span>Welcome</span>
-          <button
-            className="inline-block cursor-pointer leading-none underline"
-            onClick={logout}
-          >
-            Log out
-          </button>
+          <Button type="inline" label="Log out" onClick={logout} />
         </nav>
       )}
       <Outlet />

@@ -1,4 +1,4 @@
-import { useRef, useState, useContext } from "react";
+import { useRef, useState, useContext, useEffect } from "react";
 import { SearchContext } from "../../contexts/SearchContext";
 
 const PostsSearch = () => {
@@ -9,6 +9,20 @@ const PostsSearch = () => {
 
   // States
   const [searchValue, setSearchValue] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Effect
+  useEffect(() => {
+    const handleEscapeKey = (e) => {
+      if (e.key === "Escape") {
+        setIsSearchOpen(null);
+      }
+    };
+
+    window.addEventListener("keyup", handleEscapeKey);
+
+    return () => removeEventListener("keyup", handleEscapeKey);
+  }, []);
 
   // Contexts
   const { error, loading, searchedPosts, searchPosts } =
@@ -17,6 +31,7 @@ const PostsSearch = () => {
   // Handlers
   const handleChange = (e) => {
     setSearchValue(e.target.value);
+    setIsSearchOpen(true);
 
     // Clearing timeout if it already exists
     if (debounceRef.current) {
@@ -61,7 +76,7 @@ const PostsSearch = () => {
         onChange={handleChange}
         placeholder="Search..."
       />
-      {searchValue && (
+      {isSearchOpen && (
         <div>
           <div className="relative">
             <div className="absolute z-20 block max-h-120 w-full overflow-scroll rounded border border-gray-100 bg-white p-4 shadow-xl">

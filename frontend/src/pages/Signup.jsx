@@ -1,72 +1,103 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import axios from "../axiosInstance";
+import Button from "../components/ui/Button";
 import { useAuth } from "../contexts/AuthContext";
+import FormInput from "../components/ui/FormInput";
+import ErrorMessage from "../components/ui/ErrorMessage";
 
 const Signup = () => {
   //States
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [error, setError] = useState();
 
   // Hooks
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { register, handleSubmit, formState } = useForm();
 
   // Handlers
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await axios.post("/signup", {
-        user: {
-          name,
-          email,
-          password,
-          password_confirmation: passwordConfirmation,
-        },
-      });
-      // Getting JWT from response headers
-      const jwt = res.headers.authorization?.split(" ")[1];
-
-      // login and redirect to Feed
-      if (jwt) {
-        login(jwt);
-        navigate("/feed");
-      }
-    } catch (err) {
-      console.log(err);
+  const onSubmit = (entries) => {
+    if (entries.password !== entries.password_confirmation) {
+      setError("Password confirmation doesn't match");
+      return;
     }
+
+    axios
+      .post(`/signup`, { user: entries })
+      .then((res) => {
+        if (res.status === 200) {
+          // Getting JWT from response headers
+          const jwt = res.headers.authorization?.split(" ")[1];
+
+          // Login and redirect to Feed
+          if (jwt) {
+            login(jwt);
+            navigate("/feed");
+          }
+        }
+      })
+      .catch((err) => {
+        setError(err.response.data.errors[0]);
+      });
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormInput
+          id="name"
+          type="text"
+          labelText="Name"
+          containerClasses="mt-2"
+          formState={formState}
+          {...register("name", {
+            required: "Name required.",
+          })}
         />
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+        <FormInput
+          id="email"
+          type="email"
+          labelText="E-mail"
+          containerClasses="mt-2"
+          formState={formState}
+          {...register("email", {
+            required: "Email required.",
+          })}
         />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+        <FormInput
+          id="password"
           type="password"
-          placeholder="Password"
+          labelText="Password"
+          containerClasses="mt-2"
+          formState={formState}
+          {...register("password", {
+            required: "Password required.",
+            minLength: {
+              value: 6,
+              message: "Password must be min. 6 characters.",
+            },
+          })}
         />
-        <input
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
+        <FormInput
           type="password"
-          placeholder="Password"
+          containerClasses="mt-2"
+          id="password_confirmation"
+          labelText="Password confirmation"
+          formState={formState}
+          {...register("password_confirmation", {
+            required: "Password confirmation required.",
+            minLength: {
+              value: 6,
+              message: "Password must be min. 6 characters.",
+            },
+          })}
         />
-        <button type="submit">Sign up</button>
+
+        <Button type="submitInput" label="Submit" />
       </form>
+
+      <div>{error && <ErrorMessage>{error}</ErrorMessage>}</div>
     </>
   );
 };

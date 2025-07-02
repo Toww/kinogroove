@@ -1,7 +1,10 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import Button from "../ui/Button";
 import FormInput from "../ui/FormInput";
+import ErrorMessage from "../ui/ErrorMessage";
 import { PostsContext } from "../../contexts/PostsContext";
+
 const PostForm = () => {
   // Contexts
   const { createPost, error } = useContext(PostsContext);
@@ -50,13 +53,13 @@ const PostForm = () => {
           })}
         />
 
-        <input
-          type="submit"
+        <Button
+          type="submitInput"
           className="mt-4 cursor-pointer rounded bg-teal-400 px-2 py-2"
-          value="Create post"
-        ></input>
+          label="Create post"
+        />
       </form>
-      {error && <p>{error.message}</p>}
+      {error && <ErrorMessage>{error.message}</ErrorMessage>}
     </div>
   );
 };

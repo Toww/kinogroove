@@ -1,6 +1,7 @@
+import { Link } from "react-router";
 import { Navigate } from "react-router";
+import Button from "../components/ui/Button";
 import { useAuth } from "../contexts/AuthContext";
-import LinkButton from "../components/ui/LinkButton";
 
 const Home = () => {
   // Hooks
@@ -11,17 +12,21 @@ const Home = () => {
 
   return (
     <div className="text-center">
-      <h2 className="text-teal-400 font-bold text-lg mb-2">
+      <h2 className="mb-2 text-lg font-bold text-teal-400">
         Welcome to Kinogroove !
       </h2>
 
       <p>You need an account to view and share your grooves !</p>
 
-      <LinkButton url="/signup" label="Create Account" className="mt-4" />
+      <Link to="/signup">
+        <Button className="mt-4" label="Create Account" />
+      </Link>
 
       <p className="mt-4">Already have an account ?</p>
 
-      <LinkButton url="/login" label="Log in" className="mt-4" />
+      <Link to="/login">
+        <Button className="mt-4" label="Log in" />
+      </Link>
     </div>
   );
 };
