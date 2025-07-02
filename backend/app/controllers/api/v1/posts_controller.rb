@@ -25,6 +25,11 @@ class Api::V1::PostsController < ApplicationController
 
   # POST /posts
   def create
+    unless post_params[:song].present?
+      render json: { error: "Your post must contain a song." }, status: :unprocessable_entity
+      return
+    end
+
     @post = current_user.posts.new(post_params)
 
     if @post.save

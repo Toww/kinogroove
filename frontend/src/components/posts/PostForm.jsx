@@ -12,7 +12,10 @@ const PostForm = () => {
     const data = new FormData();
 
     data.append("post[body]", e.target.body.value);
-    data.append("post[song]", e.target.song.files[0]);
+
+    if (e.target.song.files[0]) {
+      data.append("post[song]", e.target.song.files[0]);
+    }
     createPost(data);
   };
 

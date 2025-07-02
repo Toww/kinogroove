@@ -31,7 +31,6 @@ const PostsSearch = () => {
 
   // Getters
   const getSearchResults = () => {
-    if (error) return <p className="text-red">{error}</p>;
     if (loading) return "Loading...";
 
     if (searchedPosts.length === 0) {
@@ -43,6 +42,7 @@ const PostsSearch = () => {
         key={`search-post-${index}`}
         className="mb-2 rounded border border-gray-200 p-4 text-left"
       >
+        {error && <p className="mb-6 text-red-500">{error}</p>}
         <p>{post.user_name}</p>
         <p>{post.body}</p>
         <p>{post.hash_tags.map((hash) => `#${hash}`).join(" ")}</p>

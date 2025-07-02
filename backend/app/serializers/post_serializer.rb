@@ -7,7 +7,7 @@ class PostSerializer
   end
 
   attribute :date do |post|
-    post.created_at.strftime("%b. %d, %H:%M")
+    post.created_at.in_time_zone("Europe/Paris").strftime("%b. %d, %H:%M")
   end
 
   attribute :liked do |post, params|

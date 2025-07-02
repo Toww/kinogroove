@@ -38,7 +38,7 @@ const PostsProvider = ({ children }) => {
           setPostsPerPage(res.data.posts_per_page);
         })
         .catch((err) => {
-          setError(err.message);
+          setError(err.response.data.error);
         })
         .finally(() => {
           setLoading(false);
@@ -62,7 +62,7 @@ const PostsProvider = ({ children }) => {
           fetchPosts();
         })
         .catch((err) => {
-          setError(err.message);
+          setError(err.response.data.error);
         });
     },
     [token],
