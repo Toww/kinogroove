@@ -32,7 +32,7 @@ const Pagination = () => {
 
   const getPaginationButtons = () => {
     // Variables
-    const maxInlinePages = 10;
+    const maxInlinePages = 8;
     const sideNumbersOnEllipsis = 4;
 
     // If there is less than n pages, show all buttons, ex :

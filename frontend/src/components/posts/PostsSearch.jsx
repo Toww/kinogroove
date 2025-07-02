@@ -34,11 +34,17 @@ const PostsSearch = () => {
     if (error) return <p className="text-red">{error}</p>;
     if (loading) return "Loading...";
 
+    if (searchedPosts.length === 0) {
+      return "No posts found.";
+    }
+
     return searchedPosts.map((post, index) => (
       <div
         key={`search-post-${index}`}
         className="mb-2 rounded border border-gray-200 p-4 text-left"
       >
+        <p>{post.user_name}</p>
+        <p>{post.body}</p>
         <p>{post.hash_tags.map((hash) => `#${hash}`).join(" ")}</p>
       </div>
     ));
@@ -55,13 +61,15 @@ const PostsSearch = () => {
         onChange={handleChange}
         placeholder="Search..."
       />
-      <div className="relative">
-        {searchValue && (
-          <div className="absolute z-50 block h-120 w-full rounded border border-gray-100 bg-white p-4 shadow">
-            {getSearchResults()}
+      {searchValue && (
+        <div>
+          <div className="relative">
+            <div className="absolute z-20 block max-h-120 w-full overflow-scroll rounded border border-gray-100 bg-white p-4 shadow-xl">
+              {getSearchResults()}
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
