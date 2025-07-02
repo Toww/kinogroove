@@ -8,12 +8,34 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-# ----- Seeding Posts -----
-Post.destroy_all
-
+puts "Seeding users..."
 20.times do
+userPassword = SecureRandom.base64
+
+user = User.create(
+  name: Faker::Name.name,
+  email: Faker::Internet.email,
+  password: userPassword,
+  password_confirmation: userPassword
+)
+end
+
+puts "Seeding posts..."
+100.times do
   Post.create(
-    title: Faker::Lorem.sentence(word_count: 3),
-    body: Faker::Lorem.paragraph(sentence_count: 2)
+    body: Faker::Lorem.paragraph(word_count: 10) + " #" +
+    Faker::Music.genre.split.join("-") + Faker::Lorem.paragraph(word_count: 5) +" #" + Faker::Music.genre.split.join("-"),
+    user_id: User.all.sample.id
   )
 end
+
+puts "Adding music..."
+Post.all.each do |post|
+  File.open(Rails.root.join('db/songs/lindecis_sideways.mp3')) do |file|
+    post.song.attach(io: file, filename: 'lindecis_sideways.mp3')
+  end
+end
+
+puts "-" * 20
+puts "Seeding finished !"
+puts "-" * 20

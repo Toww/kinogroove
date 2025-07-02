@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: %i[ show update destroy ]
+  before_action :set_post, only: %i[ show update destroy like ]
 
   # GET /posts
   def index
@@ -8,7 +8,7 @@ class Api::V1::PostsController < ApplicationController
     @posts = Post.order(created_at: :desc)
 
     render json: {
-      posts: paginate_posts(@posts, posts_per_page, false),
+      posts: paginate_posts(@posts, posts_per_page),
       total_count: Post.count,
       posts_per_page: posts_per_page
     }
@@ -25,7 +25,7 @@ class Api::V1::PostsController < ApplicationController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
 
     if @post.save
       render json: @post, status: :created
@@ -48,14 +48,40 @@ class Api::V1::PostsController < ApplicationController
     @post.destroy!
   end
 
+  # Liking a post
+  def like
+    result = @post.toggle_like(current_user)
+
+    if result
+      render json: {
+        success: true,
+        liked: result[:liked],
+        likes_count: result[:count]
+      }
+    else
+      render json: {
+        success: false,
+        errors: [ "Unable to toggle like button" ]
+      }, status: :unprocessable_entity
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params.expect(:id))
+      @post = Post.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.expect(post: [ :title, :body, :song ])
+      params.require(:post).permit(:title, :body, :song)
+    end
+
+    # Paginating posts response
+    def paginate_posts(posts, posts_per_page)
+      paginated_posts = posts.page(params[:page]).per(posts_per_page)
+      paginated_posts.map do |post|
+        augment_post(post)
+      end
     end
 end

@@ -11,7 +11,7 @@ class Api::V1::SearchController < ApplicationController
       "##{query}%").order(created_at: :desc)
 
     augmented_posts = @posts.map do |post|
-      augment_post(post, true)
+      augment_post(post)
     end
 
     render json: augmented_posts

@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get "search/posts"
-      resources :posts
+      resources :posts do
+        member do
+          post :like
+        end
+      end
     end
   end
 

@@ -25,7 +25,7 @@ const PostsSearch = () => {
 
     // Setting a new timeout
     debounceRef.current = setTimeout(() => {
-      searchPosts(e.target.value);
+      searchPosts(e.target.value.toLowerCase());
     }, 600);
   };
 
@@ -40,7 +40,7 @@ const PostsSearch = () => {
         className="mb-2 rounded border border-gray-200 p-4 text-left"
       >
         <h3>Title: {post.title}</h3>
-        <p>Hashtags: {post.hash_tags.map((hash) => hash.name).join(" - ")}</p>
+        <p>{post.hash_tags.map((hash) => `#${hash}`).join(" ")}</p>
       </div>
     ));
   };
