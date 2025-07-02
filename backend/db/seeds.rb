@@ -23,8 +23,8 @@ end
 puts "Seeding posts..."
 100.times do
   Post.create(
-    body: Faker::Lorem.paragraph(word_count: 10) + " #" +
-    Faker::Music.genre.split.join("-") + Faker::Lorem.paragraph(word_count: 5) +" #" + Faker::Music.genre.split.join("-"),
+    body: Faker::Lorem.sentence(word_count: 10) + " #" +
+    Faker::Music.genre.split.join("-") + Faker::Lorem.sentence(word_count: 5) + " #" + Faker::Music.genre.split.join("-"),
     user_id: User.all.sample.id
   )
 end
@@ -33,6 +33,14 @@ puts "Adding music..."
 Post.all.each do |post|
   File.open(Rails.root.join('db/songs/lindecis_sideways.mp3')) do |file|
     post.song.attach(io: file, filename: 'lindecis_sideways.mp3')
+  end
+end
+
+puts "Giving posts some love..."
+users = User.all.to_a
+Post.all.each do |post|
+  users.sample(rand(0..10)).each do |user|
+    post.likes.create({ user: user })
   end
 end
 
