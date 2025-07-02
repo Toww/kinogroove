@@ -1,6 +1,6 @@
 class PostSerializer
   include JSONAPI::Serializer
-  attributes :id, :title, :body, :likes_count
+  attributes :id, :body, :likes_count
 
   attribute :user_name do |post|
     post.user.name

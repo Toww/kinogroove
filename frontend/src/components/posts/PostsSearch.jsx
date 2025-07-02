@@ -39,7 +39,6 @@ const PostsSearch = () => {
         key={`search-post-${index}`}
         className="mb-2 rounded border border-gray-200 p-4 text-left"
       >
-        <h3>Title: {post.title}</h3>
         <p>{post.hash_tags.map((hash) => `#${hash}`).join(" ")}</p>
       </div>
     ));
