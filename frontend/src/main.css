@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-chivo: "Chivo", sans-serif;
+}
+
+body {
+  @apply font-chivo bg-zinc-900 font-light text-white;
+}
+
+input[type="file"]::file-selector-button {
+  @apply mr-4 cursor-pointer rounded-full border-2 border-emerald-400 bg-transparent px-4 py-2 font-medium text-emerald-400;
+}
+
+input[type="file"]::file-selector-button:hover {
+  @apply bg-emerald-400 text-zinc-900;
+}
