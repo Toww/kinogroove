@@ -12,9 +12,11 @@ const PaginationButton = ({ onClick, currentPage, children }) => {
   // Getters
   const getButtonClasses = () => {
     const ellipsisClasses = "bg-transparent border-none";
-    const baseClasses = "h-10 w-10 rounded bg-gray-200 leading-none";
-    const currentPageClasses = "bg-gray-400 text-white cursor-pointer";
-    const otherPageClasses = "bg-gray-200 hover:bg-gray-300 cursor-pointer";
+    const baseClasses = "h-10 w-10 rounded leading-none";
+    const currentPageClasses =
+      "bg-emerald-400 text-zinc-900 cursor-pointer font-medium";
+    const otherPageClasses =
+      "bg-zinc-700 hover:bg-emerald-400 hover:text-zinc-900 cursor-pointer";
 
     if (currentPage === children) {
       return `${baseClasses} ${currentPageClasses}`;
