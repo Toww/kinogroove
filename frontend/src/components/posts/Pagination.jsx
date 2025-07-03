@@ -74,7 +74,7 @@ const Pagination = () => {
   if (loading) return null;
 
   return (
-    <div className="mt-8 space-x-2 text-center">
+    <div className="mt-6 space-x-2 text-center">
       {/* Previous button */}
       {currentPage !== 1 && (
         <PaginationButton
