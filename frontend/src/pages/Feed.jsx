@@ -10,13 +10,12 @@ const Feed = () => {
 
   // Redirect to home if not logged
   if (!isLogged) return <Navigate to="/" />;
+
   return (
     <>
-      <PostsProvider>
-        <PostForm />
-        <PostsList />
-        <Pagination />
-      </PostsProvider>
+      <PostForm />
+      <PostsList />
+      <Pagination />
     </>
   );
 };

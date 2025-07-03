@@ -7,29 +7,32 @@ import Layout from "./components/Layout";
 import AuthLayout from "./components/AuthLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
+import { PostsProvider } from "./contexts/PostsContext";
 
 const App = () => {
   return (
     <>
       <AuthProvider>
         <BrowserRouter>
-          <Routes>
-            <Route element={<AuthLayout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-            </Route>
-            <Route element={<Layout />}>
-              <Route
-                path="/feed"
-                element={
-                  <ProtectedRoute>
-                    <Feed />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-          </Routes>
+          <PostsProvider>
+            <Routes>
+              <Route element={<AuthLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+              </Route>
+              <Route element={<Layout />}>
+                <Route
+                  path="/feed"
+                  element={
+                    <ProtectedRoute>
+                      <Feed />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
+            </Routes>
+          </PostsProvider>
         </BrowserRouter>
       </AuthProvider>
     </>
