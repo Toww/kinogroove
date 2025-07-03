@@ -9,7 +9,7 @@ const PostsList = () => {
   if (loading) return "Loading...";
 
   return (
-    <div>
+    <div className="flex flex-col space-y-4">
       {error && <p className="mb-6 text-red-500">{error}</p>}
       {posts.map((post) => (
         <Post key={post.id} postData={post} />
