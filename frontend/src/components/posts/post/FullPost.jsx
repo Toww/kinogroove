@@ -52,7 +52,7 @@ const FullPost = ({
             )}
             {/* Like button */}
             <div
-              className={`flex cursor-pointer items-center space-x-1 text-zinc-400 hover:text-emerald-400 ${isLiked && "text-emerald-400"}`}
+              className={`flex cursor-pointer items-center space-x-1 hover:text-emerald-400 ${isLiked ? "text-emerald-400" : "text-zinc-400"}`}
             >
               <FontAwesomeIcon
                 icon={isLiked ? faHeart : faHeartRegular}
