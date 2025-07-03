@@ -2,7 +2,7 @@
 
 Bonjour la team Kinoba 👋, voici l'exercice technique demandé !
 
-Pour le tester voici les quelques besoins après clone du projet :
+Pour le tester voici les quelques instructions après clone du projet :
 
 ## Lancer l'API rails
 
@@ -57,6 +57,8 @@ L'appli front est lancée et tout est prêt à être testé 🎉!
 
 Il vous suffit alors de vous rendre sur [http://127.0.0.1:5173/](http://127.0.0.1:5173/) et de vous créer un compte.
 
+(Si vous n'avez pas de fichier `.mp3` sous la main, celui utilisé pour le seed est dans `backend/db/songs`)
+
 ## Les wireframes et maquettes
 
 Les wireframes et maquettes Figma sont disponibles en suivant [ce lien](https://www.figma.com/design/qKLzw6WitJmAwmUypOohHO/Kinogroove?node-id=0-1&t=zJJbY5y9Wx3CLjTg-1).
@@ -69,4 +71,4 @@ Ce projet étant un POC mis en place dans un temps court, voici quelques pistes 
 
 - Mettre en place Typescript pour pouvoir typer la partie front.
 
-- Améliorer la sécurité en ne stockant pas les JWT dans le local storage pour se protéger des attaques XSS. C'est une solution viable pour un POC en local mais déconseillée en production.
+- Améliorer la sécurité en ne stockant pas les JWT dans le local storage pour se protéger des attaques XSS. C'est une solution viable pour un POC mais déconseillée en production.
