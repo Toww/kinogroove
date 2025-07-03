@@ -25,13 +25,13 @@ const PostForm = () => {
   };
 
   return (
-    <div className="mb-8 rounded-sm bg-zinc-800 p-4">
+    <div className="mb-4 rounded-sm bg-zinc-800 p-4">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <FormInput
             id="body"
             type="textArea"
-            inputClasses="bg-white p-3 h-20 text-zinc-900 text-base resize-none"
+            inputClasses="bg-white p-3 h-20 text-zinc-900 text-base resize-none focus:outline-2 outline-emerald-400"
             formState={formState}
             {...register("body", {
               required: "Your post must have a message.",
