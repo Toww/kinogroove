@@ -4,6 +4,7 @@ import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
+import AuthLayout from "./components/AuthLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -13,10 +14,12 @@ const App = () => {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route element={<Layout />}>
+            <Route element={<AuthLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+            </Route>
+            <Route element={<Layout />}>
               <Route
                 path="/feed"
                 element={

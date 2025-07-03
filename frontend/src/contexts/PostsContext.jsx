@@ -48,7 +48,7 @@ const PostsProvider = ({ children }) => {
   );
 
   const createPost = useCallback(
-    (data) => {
+    (data, resetForm) => {
       if (!token) {
         setLoading(false);
         return;
@@ -58,8 +58,11 @@ const PostsProvider = ({ children }) => {
         .post(`${API_URL}/posts`, data, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .then(() => {
-          fetchPosts();
+        .then((res) => {
+          if (res.status === 201) {
+            fetchPosts();
+            resetForm && resetForm();
+          }
         })
         .catch((err) => {
           setError(err.response.data.error);

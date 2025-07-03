@@ -1,17 +1,18 @@
+import { useAuth } from "../contexts/AuthContext";
 import PostForm from "../components/posts/PostForm";
 import PostsList from "../components/posts/PostsList";
 import Pagination from "../components/posts/Pagination";
 import { PostsProvider } from "../contexts/PostsContext";
-import PostsSearch from "../components/posts/PostsSearch";
-import { SearchProvider } from "../contexts/SearchContext";
 
 const Feed = () => {
+  // Hooks
+  const { isLogged } = useAuth();
+
+  // Redirect to home if not logged
+  if (!isLogged) return <Navigate to="/" />;
   return (
     <>
       <PostsProvider>
-        <SearchProvider>
-          <PostsSearch />
-        </SearchProvider>
         <PostForm />
         <PostsList />
         <Pagination />

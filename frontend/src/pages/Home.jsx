@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { Navigate } from "react-router";
 import Button from "../components/ui/Button";
 import { useAuth } from "../contexts/AuthContext";
+import KinogrooveLogo from "../assets/kinogroove.svg?react";
 
 const Home = () => {
   // Hooks
@@ -12,20 +13,24 @@ const Home = () => {
 
   return (
     <div className="text-center">
-      <h2 className="mb-2 text-lg font-bold text-teal-400">
-        Welcome to Kinogroove !
-      </h2>
+      <div className="mx-auto -mt-4 w-72">
+        <KinogrooveLogo />
+      </div>
 
-      <p>You need an account to view and share your grooves !</p>
+      <p className="mt-8">
+        You need an account to view and share your grooves !
+      </p>
 
       <Link to="/signup">
-        <Button className="mt-4" label="Create Account" />
+        <Button className="mt-6 w-72">Create Account</Button>
       </Link>
 
-      <p className="mt-4">Already have an account ?</p>
+      <p className="mt-6">Already have an account ?</p>
 
       <Link to="/login">
-        <Button className="mt-4" label="Log in" />
+        <Button type="outline" className="mt-6 w-72">
+          Log in
+        </Button>
       </Link>
     </div>
   );

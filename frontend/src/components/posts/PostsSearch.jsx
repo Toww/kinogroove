@@ -66,26 +66,24 @@ const PostsSearch = () => {
   };
 
   return (
-    <div className="px-8 text-center">
+    <>
       <input
         type="text"
         id="search"
         name="search"
-        className="mb-4 rounded-full px-3 py-2 leading-none outline-1 outline-gray-200 focus:outline-2 focus:outline-teal-200"
+        className="mb-4 w-full rounded-full px-4 py-2 leading-none outline-1 outline-white focus:bg-white focus:text-zinc-900 focus:outline-2"
         value={searchValue}
         onChange={handleChange}
         placeholder="Search..."
       />
       {isSearchOpen && (
-        <div>
-          <div className="relative">
-            <div className="absolute z-20 block max-h-120 w-full overflow-scroll rounded border border-gray-100 bg-white p-4 shadow-xl">
-              {getSearchResults()}
-            </div>
+        <div className="relative">
+          <div className="absolute z-20 block max-h-120 w-full overflow-scroll rounded bg-white p-4">
+            {getSearchResults()}
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

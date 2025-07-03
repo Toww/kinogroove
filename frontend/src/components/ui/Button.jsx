@@ -1,24 +1,17 @@
-const Button = ({ className, label, type, ...props }) => {
-  const baseClasses = "cursor-pointer rounded bg-teal-400 px-3 py-2";
-  const inlineClasses = "inline-block cursor-pointer leading-none underline";
-
-  if (type === "submitInput") {
-    return (
-      <input
-        type="submit"
-        value={label}
-        className={`${baseClasses} ${className}`}
-        {...props}
-      />
-    );
-  }
+const Button = ({ className, children, style, ...props }) => {
+  const buttonClasses = {
+    base: "cursor-pointer rounded-full bg-emerald-400 px-4 py-2 font-medium text-zinc-900 hover:bg-emerald-300",
+    outline:
+      "cursor-pointer border-2 border-emerald-400 rounded-full bg-transparent hover:bg-emerald-400 px-4 py-2 font-medium text-emerald-400 hover:text-zinc-900",
+    inline: "cursor-pointer leading-none underline",
+  };
 
   return (
     <button
-      className={`${type === "inline" ? inlineClasses : baseClasses} ${className}`}
+      className={`${(style && buttonClasses[style]) || buttonClasses["base"]} ${className}`}
       {...props}
     >
-      {label}
+      {children}
     </button>
   );
 };

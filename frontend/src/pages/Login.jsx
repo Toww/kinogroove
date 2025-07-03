@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import axios from "../axiosInstance";
 import Button from "../components/ui/Button";
-import FormInput from "../components/ui/FormInput";
 import { useAuth } from "../contexts/AuthContext";
+import FormInput from "../components/ui/FormInput";
 import ErrorMessage from "../components/ui/ErrorMessage";
 
 const Login = () => {
@@ -38,33 +38,53 @@ const Login = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div>
+      <p className="mb-6 text-center text-lg">Please log in</p>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-72">
         <FormInput
           id="email"
           type="email"
           labelText="E-mail"
-          containerClasses="mt-2"
           formState={formState}
           {...register("email", {
             required: "Email required.",
           })}
         />
         <FormInput
-          id="password  "
+          id="password"
           type="password"
           labelText="Password"
-          containerClasses="mt-2"
+          containerClasses="mt-4"
           formState={formState}
           {...register("password", {
             required: "Password required.",
+            minLength: {
+              value: 6,
+              message: "Password must be min. 6 characters.",
+            },
           })}
         />
-        <Button type="submitInput" label="Submit" />
-      </form>
 
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-    </>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+
+        <Button style="outline" type="submit" className="mx-auto mt-6 w-full">
+          Submit
+        </Button>
+
+        <p className="mt-6 text-center text-sm text-zinc-400">
+          Don't have an account ?
+        </p>
+        <Link to="/signup">
+          <Button
+            style="inline"
+            type="submit"
+            className="inline-block w-full text-sm"
+          >
+            Sign up
+          </Button>
+        </Link>
+      </form>
+    </div>
   );
 };
 

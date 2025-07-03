@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import axios from "../axiosInstance";
 import Button from "../components/ui/Button";
 import { useAuth } from "../contexts/AuthContext";
@@ -44,7 +44,8 @@ const Signup = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <p className="mb-6 text-center text-lg">Signin up</p>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-72">
         <FormInput
           id="name"
           type="text"
@@ -94,7 +95,21 @@ const Signup = () => {
           })}
         />
 
-        <Button type="submitInput" label="Submit" />
+        <Button style="outline" type="submit" className="mx-auto mt-6 w-full">
+          Submit
+        </Button>
+        <p className="mt-6 text-center text-sm text-zinc-400">
+          Already have an account ?
+        </p>
+        <Link to="/login">
+          <Button
+            style="inline"
+            type="submit"
+            className="inline-block w-full text-sm"
+          >
+            Log in
+          </Button>
+        </Link>
       </form>
 
       <div>{error && <ErrorMessage>{error}</ErrorMessage>}</div>
