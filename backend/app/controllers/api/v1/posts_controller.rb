@@ -16,11 +16,7 @@ class Api::V1::PostsController < ApplicationController
 
   # GET /posts/1
   def show
-    if @post.song.attached?
-      render json: @post.as_json.merge(song_url: url_for(@post.song))
-    else
-      render json: @post.as_json.merge(song_url: nil)
-    end
+    render json: augment_post(@post)
   end
 
   # POST /posts

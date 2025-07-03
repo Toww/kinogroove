@@ -3,7 +3,9 @@ import Home from "./pages/Home";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import PostEdit from "./pages/PostEdit";
 import Layout from "./components/Layout";
+import PostDetails from "./pages/PostDetails";
 import AuthLayout from "./components/AuthLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -27,6 +29,22 @@ const App = () => {
                   element={
                     <ProtectedRoute>
                       <Feed />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/posts/:id"
+                  element={
+                    <ProtectedRoute>
+                      <PostDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/posts/:id/edit"
+                  element={
+                    <ProtectedRoute>
+                      <PostEdit />
                     </ProtectedRoute>
                   }
                 />

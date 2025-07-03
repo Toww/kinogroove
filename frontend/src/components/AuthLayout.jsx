@@ -1,5 +1,4 @@
-import { Outlet, useNavigate } from "react-router";
-import { useAuth } from "../contexts/AuthContext";
+import { Outlet } from "react-router";
 
 const AuthLayout = () => {
   return (

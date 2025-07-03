@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { Outlet } from "react-router";
 import Button from "./ui/Button";
 import { useAuth } from "../contexts/AuthContext";
@@ -10,10 +11,12 @@ import KinogrooveLogo from "../assets/kinogroove.svg?react";
 const Layout = () => {
   const { isLogged, logout } = useAuth();
   return (
-    <div className="mx-auto my-8 grid max-w-7xl grid-cols-12 gap-6">
+    <div className="mx-auto my-8 grid w-7xl grid-cols-12 gap-6">
       {/* Left column */}
       <nav className="col-span-3 h-26 w-full">
-        <KinogrooveLogo className="w-40" />
+        <Link to="/feed">
+          <KinogrooveLogo className="w-40" />
+        </Link>
         <ProfileInfo />
         <MenuItems />
         {isLogged && (

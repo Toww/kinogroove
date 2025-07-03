@@ -1,16 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import FormInput from "../ui/FormInput";
 import ErrorMessage from "../ui/ErrorMessage";
 import { PostsContext } from "../../contexts/PostsContext";
 
-const PostForm = () => {
+const PostForm = ({ postData }) => {
   // Contexts
-  const { createPost, error } = useContext(PostsContext);
+  const { createPost, editPost, error } = useContext(PostsContext);
 
   // Hooks
-  const { register, handleSubmit, formState, reset } = useForm();
+  const { register, handleSubmit, formState, reset, setValue } = useForm({
+    body: "",
+  });
+
+  useEffect(() => {
+    if (postData) {
+      setValue("body", postData.body);
+    }
+  }, [postData]);
 
   // Handlers
   const onSubmit = (entries) => {
@@ -21,7 +29,12 @@ const PostForm = () => {
     if (entries.song[0]) {
       data.append("post[song]", entries.song[0]);
     }
-    createPost(data, reset);
+
+    if (postData) {
+      editPost(data, postData.id);
+    } else {
+      createPost(data, reset);
+    }
   };
 
   return (

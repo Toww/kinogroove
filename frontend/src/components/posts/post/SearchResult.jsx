@@ -5,7 +5,7 @@ import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import DefaultPic from "../../../assets/feed/default-pic.svg?react";
 
 const SearchResult = ({ isLiked, postData, postLikes }) => (
-  <div className="flex items-start space-x-2 rounded-sm bg-white p-4 text-zinc-900">
+  <div className="flex items-start space-x-2 rounded-sm p-4 text-zinc-900">
     <div className="flex w-full flex-col">
       {/* Post details / icons */}
       <div className="flex items-center space-x-2">

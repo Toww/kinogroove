@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Post from "./post/Post";
-
+import ErrorMessage from "../ui/ErrorMessage";
 import { PostsContext } from "../../contexts/PostsContext";
 
 const PostsList = () => {
@@ -10,7 +10,7 @@ const PostsList = () => {
 
   return (
     <div className="flex flex-col space-y-4">
-      {error && <p className="mb-6 text-red-500">{error}</p>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       {posts.map((post) => (
         <Post key={post.id} postData={post} />
       ))}
