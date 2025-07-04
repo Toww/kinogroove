@@ -73,7 +73,7 @@ const PostsSearch = () => {
 
   // Getters
   const getSearchResults = () => {
-    if (loading) return <p className="p-4">"Loading..."</p>;
+    if (loading) return <p className="p-4">Loading...</p>;
 
     if (!loading && searchedPosts.length === 0) {
       return <p className="p-4">No posts found.</p>;

@@ -13,7 +13,7 @@ const PostsProvider = ({ children }) => {
   const [searchParams] = useSearchParams();
 
   //States
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState(null);
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);

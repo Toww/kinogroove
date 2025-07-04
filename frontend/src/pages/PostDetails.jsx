@@ -22,7 +22,7 @@ const PostDetails = () => {
     <>
       <BackButton />
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      <Post postData={post} />
+      {post && <Post postData={post} />}
     </>
   );
 };
