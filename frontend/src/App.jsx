@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router";
+import Home from "./pages/Home";
+import Feed from "./pages/Feed";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import PostEdit from "./pages/PostEdit";
+import Layout from "./components/Layout";
+import PostDetails from "./pages/PostDetails";
+import AuthLayout from "./components/AuthLayout";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { AuthProvider } from "./contexts/AuthContext";
+import { PostsProvider } from "./contexts/PostsContext";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <AuthProvider>
+        <BrowserRouter>
+          <PostsProvider>
+            <Routes>
+              <Route element={<AuthLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+              </Route>
+              <Route element={<Layout />}>
+                <Route
+                  path="/feed"
+                  element={
+                    <ProtectedRoute>
+                      <Feed />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/posts/:id"
+                  element={
+                    <ProtectedRoute>
+                      <PostDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/posts/:id/edit"
+                  element={
+                    <ProtectedRoute>
+                      <PostEdit />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
+            </Routes>
+          </PostsProvider>
+        </BrowserRouter>
+      </AuthProvider>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
