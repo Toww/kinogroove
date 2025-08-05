@@ -12,7 +12,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create post" do
     assert_difference("Post.count") do
-      post posts_url, params: { post: { body: @post.body} }, as: :json
+      post posts_url, params: { post: { body: @post.body } }, as: :json
     end
 
     assert_response :created
