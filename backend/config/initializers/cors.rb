@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "*" # /!\ Must be changed to front-end domain in production, only use locally
+    origins "http://localhost:5173" # /!\ Must be changed to front-end domain in production, only use locally
 
     resource "*",
       headers: :any,
