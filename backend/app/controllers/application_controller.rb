@@ -10,13 +10,6 @@ class ApplicationController < ActionController::API
   private
   def augment_post(post)
     song_url = post.song.attached? ? url_for(post.song) : nil
-    PostSerializer.new(
-      post,
-      {
-        params: {
-          song_url: song_url,
-          current_user: current_user
-        }
-      }).serializable_hash[:data][:attributes]
+    PostBlueprint.render_as_hash(post, song_url: song_url, current_user: current_user)
   end
 end
