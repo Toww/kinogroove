@@ -38,9 +38,9 @@ gem "rack-cors"
 # Project gems
 gem "dotenv"
 gem "devise"
-gem "devise-jwt"
-gem "jsonapi-serializer"
 gem "kaminari"
+gem "devise-jwt"
+gem "blueprinter"
 
 
 group :development, :test do

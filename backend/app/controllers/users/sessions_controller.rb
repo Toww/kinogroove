@@ -12,7 +12,7 @@ class Users::SessionsController < Devise::SessionsController
         message: "Logged in successfully."
       },
       data: {
-        user: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+        user: UserBlueprint.render(resource)
       }
     }, status: :ok
   end
