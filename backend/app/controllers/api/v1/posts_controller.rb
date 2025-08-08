@@ -1,16 +1,19 @@
 class Api::V1::PostsController < ApplicationController
+  include Pagy::Backend
+
   before_action :authenticate_user!
   before_action :set_post, only: %i[ show update destroy like ]
 
   # GET /posts
   def index
-    posts_per_page = 10
-    @posts = Post.order(created_at: :desc)
+    pagy, records = pagy(Post.order(created_at: :desc), page: params[:page])
+
+    pagy_info = pagy_metadata(pagy)
 
     render json: {
-      posts: paginate_posts(@posts, posts_per_page),
-      total_count: Post.count,
-      posts_per_page: posts_per_page
+      posts: augment_posts(records),
+      pagination: pagy_info[:series],
+      pages_count: pagy_info[:pages]
     }
   end
 
@@ -78,10 +81,9 @@ class Api::V1::PostsController < ApplicationController
       params.require(:post).permit(:body, :song)
     end
 
-    # Paginating posts response
-    def paginate_posts(posts, posts_per_page)
-      paginated_posts = posts.page(params[:page]).per(posts_per_page)
-      paginated_posts.map do |post|
+    # Augmenting posts response
+    def augment_posts(posts)
+      posts.map do |post|
         augment_post(post)
       end
     end

@@ -15,10 +15,10 @@ const PostsProvider = ({ children }) => {
   //States
   const [post, setPost] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [pagination, setPagination] = useState([]);
+  const [pagesCount, setPagesCount] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [totalPosts, setTotalPosts] = useState(0);
-  const [postsPerPage, setPostsPerPage] = useState(10);
 
   // Handlers
   const createPost = useCallback(
@@ -111,8 +111,8 @@ const PostsProvider = ({ children }) => {
         .then((res) => {
           if ((res.status = 200)) {
             setPosts(res.data.posts);
-            setTotalPosts(res.data.total_count);
-            setPostsPerPage(res.data.posts_per_page);
+            setPagination(res.data.pagination);
+            setPagesCount(res.data.pages_count);
           }
         })
         .catch((err) => {
@@ -137,8 +137,8 @@ const PostsProvider = ({ children }) => {
         posts,
         error,
         loading,
-        totalPosts,
-        postsPerPage,
+        pagination,
+        pagesCount,
         editPost,
         fetchPost,
         fetchPosts,

@@ -18,7 +18,7 @@ const PaginationButton = ({ onClick, currentPage, children }) => {
     const otherPageClasses =
       "bg-zinc-700 hover:bg-emerald-400 hover:text-zinc-900 cursor-pointer";
 
-    if (currentPage === children) {
+    if (currentPage.toString() === children) {
       return `${baseClasses} ${currentPageClasses}`;
     }
     if (isEllipsis) {
